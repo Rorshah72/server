@@ -1,0 +1,55 @@
+Node.js application to work with the database and teach you the basics of its use.
+Storing data in a global variable
+Distributing static pages to users (as you learned in the previous chapter) may be a good option for landing pages or for personal blogs. However, if you want to deliver personalized content, you will have to store data somewhere.
+Take a simple example: registering a user. You can give user content to individual users or make it available to them only after identification.
+If the user wants to register in your application, you can create a handler for the corresponding route to make registration possible:
+const users = []
+app.post ('/ users', function (req, res) {
+  // retrieve user data from the request body
+  const user = req.body
+  users.push ({
+    name: user.name,
+    age: user.age
+  })
+  res.send ('successfully registered')
+})
+Thus, you can store users in a global variable that will be stored in memory for the entire lifetime of your application.
+Using this method can be problematic for several reasons:
+random access memory
+memory is cleared every time you restart your application
+if you do not clean the memory, sometimes you may get a memory overflow
+File data storage
+The next solution that may come to your mind is to store data in files.
+If we constantly save our user data in the file system, we can avoid the previously listed problems.
+In practice, this method is as follows:
+const fs = require ('fs')
+app.post ('/ users', function (req, res) {
+  const user = req.body
+  fs.appendToFile ('users.txt', JSON.stringify ({name: user.name, age: user.age}), (err) => {
+    res.send ('successfully registered')
+  })
+})
+Thus, we will not lose user data even after a server reboot. This solution is also cost-effective, as increasing disk space is cheaper than buying RAM.
+Unfortunately, storing user data this way still has several drawbacks:
+adding data works fine, but consider updating or deleting
+if we work with files, there is no simple solution for parallel access to them (system locks will not allow you to write to one file in parallel)
+when we try to scale our application, we cannot share files between servers (actually we can, but this is far beyond the level of this guide)
+Real databases come onto the scene here.
+You may have already heard that there are two main types of databases: SQL and NoSQL.
+SQL
+Let's start with SQL. This is a query language designed to work with relational databases. SQL is slightly different depending on the product you are using, but the basic things in them are identical.
+The data itself is stored in tables. Each part added will be presented as a row in the table, as in Google Sheets or Microsoft Excel.
+In the SQL database, you can define schemas. They will provide a skeleton for the data you are about to post. Also, before storing data, it will be necessary to specify the types of different values. For example, you would need to define a table for your user data and tell the database that it has a username that is a string, and age is an integer type.
+NoSQL
+On the other hand, NoSQL databases have become very popular in the last decade. With NoSQL, you don’t need to define a schema and you can store any arbitrary JSON. This works well with JavaScript because we can easily turn any object into JSON. Be careful, because you can never guarantee that the data is consistent, and you can never know what structure is in the database.
+Node.js and MongoDB
+There is a common misconception about Node.js that you can hear quite often:
+“Node.js can only be used with MongoDB (the most popular NoSQL database).”
+In my experience, this is not the case. Most databases have drivers for Node.js and libraries in NPM. In my opinion, they are as simple and easy to use as MongoDB.
+Node.js and PostgreSQL
+For simplicity, we will use SQL in the following example. My choice is PostgreSQL.
+To start PostgreSQL, you need to install it on your computer. If you are using a Mac, you can use Homebrew to install PostgreSQL. Otherwise, if you are running Linux, you can install it using your package manager.
+
+For more information, check out this great getting started guide on your first database.
+If you plan to use the tool to view the database, I would recommend the command line utility - psql. It comes with a PostgreSQL server. Here's a quick guide that comes in handy if you start using psql.
+If you do not like the command interface

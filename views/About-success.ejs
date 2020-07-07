@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name = "viewport" content="width=device-width, initial-scale = 1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie = edge">
+    <title>About </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+      body {background-color: #b57c86;}
+      h1 {color: white; font-size: 2em}
+      p {color: #fafafa; font-size: 1.1em}
+      </style>
+  </head>
+  <body>
+    <%- include ('blocks/header.ejs') %>
+    <h1>Volkov</h1>
+    <p>VolKov</p>
+    <<p>
+        <<b>Name :</b> <%= user.getName() %> </b>
+        <<b>Secondname :</b> <%= user.getSecondname() %> </b>
+        <<b>Email :</b> <%= user.getEmail() %> </b>
+        <<b>Password :</b> <%= user.getPassword() %> </b>
+    </p>
+
+  </body>
+</html>
